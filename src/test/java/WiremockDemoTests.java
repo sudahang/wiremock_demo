@@ -29,12 +29,13 @@ public class WiremockDemoTests {
                 .willReturn(aResponse()
                         .withStatus(200)
 //                        .withHeader("Content-Type", "application/json")
-                        .withBody("<response>Chevy car response body</response>")));
+                        .withBody("{\"message\":\"Chevy car response body\"}")));
         String url = "http://localhost:8080/mycar/Chevy";
         String method = "GET";
         String body = "Chevy car response body";
 
         Response response = given().get(url);
+        response.then().log().all();
         assertEquals(200, response.getStatusCode());
         assertEquals("Chevy car response body", response.jsonPath().get("message"));
     }
